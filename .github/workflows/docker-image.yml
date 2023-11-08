@@ -5,6 +5,9 @@ on:
     branches:
       - "main"
 
+env:
+  REGISTRY_NAME: registry.alexjonas.com.br/command-dispatcher
+  IMAGE_TAG: ${{ github.run_id }}
 jobs:
   docker:
     runs-on: ubuntu-latest
@@ -13,7 +16,7 @@ jobs:
         run: |
           echo "GITHUB_SHA=$GITHUB_SHA"
           export IMAGE_BUILD_VERSION="v1.0.$GITHUB_RUN_NUMBER"
-          export IMAGE_NAME="registry.alexjonas.com.br/command-dispatcher"
+          export IMAGE_NAME=""
           export IMAGE_NAME_TAGS="$IMAGE_NAME:latest,$IMAGE_NAME:$IMAGE_BUILD_VERSION"
       - name: Checkout
         uses: actions/checkout@v4
@@ -37,4 +40,4 @@ jobs:
           dockerFile: Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: $IMAGE_NAME_TAGS
+          tags: ${{ env.REGISTRY_NAME }}:latest,${{ env.REGISTRY_NAME }}:${{ env.IMAGE_TAG }}
