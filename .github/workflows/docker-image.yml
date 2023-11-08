@@ -74,6 +74,7 @@ jobs:
         
         with:
           context: .
+          dockerFile: Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
           tags: registry.alexjonas.com.br/command-dispatcher:latest,registry.alexjonas.com.br/command-dispatcher:v1
