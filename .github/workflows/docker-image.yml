@@ -12,21 +12,16 @@ jobs:
       - name: test
         run: |-
           echo "Slug variables"
-          echo " - ${{ env.GITHUB_REF_SLUG }}"    
-          echo " - ${{ env.GITHUB_HEAD_REF_SLUG }}"
-          echo " - ${{ env.GITHUB_BASE_REF_SLUG }}"
-          echo " - ${{ env.GITHUB_REPOSITORY_SLUG }}"
-          # output e.g. : master feat-new-feature v1.0.0 product-1.0.0-rc.2 new-awesome-product
-          echo "Slug URL variables"
-          echo " - ${{ env.GITHUB_REF_SLUG_URL }}"
-          echo " - ${{ env.GITHUB_HEAD_REF_SLUG_URL }}"
-          echo " - ${{ env.GITHUB_BASE_REF_SLUG_URL }}"
-          echo " - ${{ env.GITHUB_REPOSITORY_SLUG_URL }}"
-          # output e.g. : master feat-new-feature v1-0-0 product-1-0-0-rc-2 new-awesome-product
-          echo "Short SHA variables"
-          echo " - ${{ env.GITHUB_SHA_SHORT }}"
-          # output e.g. : ffac537e
-          export DATA_ROW=$(echo "{\"commit\":\"$BITBUCKET_COMMIT_SHORT\",\"branch\":\"$BITBUCKET_BRANCH_SHORT\"}")
+          echo "GITHUB_REPOSITORY_SLUG=$GITHUB_REPOSITORY_SLUG"
+          echo "GITHUB_REPOSITORY_OWNER=$GITHUB_REPOSITORY_OWNER"
+          echo "GITHUB_REPOSITORY_OWNER_SLUG=$GITHUB_REPOSITORY_OWNER_SLUG"
+          echo "GITHUB_REPOSITORY_NAME=$GITHUB_REPOSITORY_NAME"
+          echo "GITHUB_REPOSITORY_NAME_SLUG=$GITHUB_REPOSITORY_NAME_SLUG"
+          echo "GITHUB_REF_SLUG=$GITHUB_REF_SLUG"
+          echo "GITHUB_REF_NAME=$GITHUB_REF_NAME"
+          echo "GITHUB_REF_NAME_SLUG=$GITHUB_REF_NAME_SLUG"
+          echo "GITHUB_SHA_SHORT=$GITHUB_SHA_SHORT"
+          export DATA_ROW=$(echo "{\"commit\":\"$GITHUB_SHA_SHORT\",\"branch\":\"$BITBUCKET_BRANCH_SHORT\"}")
           echo $DATA_ROW
       - name: Checkout
         uses: actions/checkout@v4
@@ -46,4 +41,4 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: registry.alexjonas.com.br/cimiddleware:latest,registry.alexjonas.com.br/cimiddleware:latest
+          tags: registry.alexjonas.com.br/command-dispatcher:latest,registry.alexjonas.com.br/command-dispatcher:v1
