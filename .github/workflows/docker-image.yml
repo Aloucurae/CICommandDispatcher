@@ -7,7 +7,7 @@ on:
 
 env:
   REGISTRY_NAME: registry.alexjonas.com.br/command-dispatcher
-  IMAGE_TAG: ${{ github.run_id }}
+  IMAGE_TAG: "V1.0.${{ github.run_number}}"
 jobs:
   docker:
     runs-on: ubuntu-latest
