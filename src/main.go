@@ -36,10 +36,6 @@ func AuthMiddleware(next http.Handler) http.Handler {
 func main() {
 	_ = dotenv.SetenvFile(*envfile)
 
-	release.CodeRunner("datafrete/datafrete:v2.14.02")
-
-	return
-
 	router := mux.NewRouter()
 
 	router.Use(AuthMiddleware)
@@ -48,9 +44,13 @@ func main() {
 
 	http.Handle("/", router)
 
-	fmt.Printf("got SERVER_PORT \t %v \n", os.Getenv("SERVER_PORT"))
-
 	SERVER_PORT := os.Getenv("SERVER_PORT")
+
+	if SERVER_PORT == "" {
+		SERVER_PORT = "80"
+	}
+
+	fmt.Printf("got SERVER_PORT \t %v \n", SERVER_PORT)
 
 	http.ListenAndServe(":"+SERVER_PORT, nil)
 }

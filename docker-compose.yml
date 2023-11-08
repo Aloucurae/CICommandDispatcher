@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+  command-dispatcher:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: registry.alexjonas.com.br/command-dispatcher:latest
+    environment:
+      SERVER_TOKEN: yourtoken
+    command: ["/app/server"]
+    ports:
+      - "8081:80"
+    volumes:
+      - ./config:/app/config
