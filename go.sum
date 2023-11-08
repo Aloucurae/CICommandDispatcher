@@ -1,0 +1,4 @@
+github.com/gorilla/mux v1.8.1 h1:TuBL49tXwgrFYWhqrNgrUNEY92u81SPhu7sTdzQEiWY=
+github.com/gorilla/mux v1.8.1/go.mod h1:AKf9I4AEqPTmMytcMc0KkNouC66V3BtZ4qD5fmWSiMQ=
+poseur.com/dotenv v1.0.1 h1:dbgB8RioRnodx/z6kE8Nxee9781WqHLS2tpc7Rsi3bg=
+poseur.com/dotenv v1.0.1/go.mod h1:AXzgiw449QfWLjwg3/RInJSUFtyRoKvM1JI1+5rm7/o=

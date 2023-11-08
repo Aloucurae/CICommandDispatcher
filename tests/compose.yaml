@@ -1,0 +1,9 @@
+version: '3.4'
+
+services:
+  datafrete-video:
+    image: apache
+    restart: always
+    ports:
+      - "8667:80"
+        
