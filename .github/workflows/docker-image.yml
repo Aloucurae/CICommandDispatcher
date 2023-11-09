@@ -44,7 +44,8 @@ jobs:
         with:
           webhook_url: ${{ secrets.WEBHOOK_URL }}
           webhook_secret: ${{ secrets.WEBHOOK_SECRET }}
+          webhook_auth: ${{ secrets.WEBHOOK_SECRET }}
           webhook_type: "json"
           verify_ssl: false
           webhook_auth_type: "bearer"
-          data: "{ \"commit\": \"${{ env.IMAGE_COMMIT }}\" , \"image\":\"{{ env.REGISTRY_NAME }}:${{ env.IMAGE_TAG }}\" }"
+          data: "{ \"commit\": \"${{ env.IMAGE_COMMIT }}\" , \"image\":\"${{ env.REGISTRY_NAME }}:${{ env.IMAGE_TAG }}\" }"
