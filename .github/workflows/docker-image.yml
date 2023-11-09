@@ -8,6 +8,7 @@ on:
 env:
   REGISTRY_NAME: registry.alexjonas.com.br/command-dispatcher
   IMAGE_TAG: "V1.0.${{ github.run_number}}"
+  IMAGE_COMMIT: "${{ github.sha }}"
 jobs:
   docker:
     runs-on: ubuntu-latest
@@ -37,3 +38,13 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{ env.REGISTRY_NAME }}:latest,${{ env.REGISTRY_NAME }}:${{ env.IMAGE_TAG }}
+
+      - name: Invoke deployment hook
+        uses: distributhor/workflow-webhook@v3
+        with:
+          webhook_url: ${{ secrets.WEBHOOK_URL }}
+          webhook_secret: ${{ secrets.WEBHOOK_SECRET }}
+          webhook_type: "json"
+          verify_ssl: false
+          webhook_auth_type: "bearer"
+          data: "{ \"commit\": \"${{ env.IMAGE_COMMIT }}\" , \"image\":\"{{ env.REGISTRY_NAME }}:${{ env.IMAGE_TAG }}\" }"

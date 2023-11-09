@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"flag"
 	"fmt"
 	"localDeployer/src/release"
@@ -16,6 +17,11 @@ var envfile = flag.String("env", ".env", "environment file")
 func AuthMiddleware(next http.Handler) http.Handler {
 
 	return http.HandlerFunc(func(response http.ResponseWriter, request *http.Request) {
+
+		if request.RequestURI == "/check" {
+			next.ServeHTTP(response, request)
+			return
+		}
 
 		SERVER_TOKEN := "Bearer " + os.Getenv("SERVER_TOKEN")
 
@@ -33,12 +39,27 @@ func AuthMiddleware(next http.Handler) http.Handler {
 	})
 }
 
+type msg struct {
+	Ok string `json:"ok"`
+}
+
+func checkHandler(response http.ResponseWriter, request *http.Request) {
+
+	event := msg{Ok: "ok"}
+
+	response.Header().Set("Content-Type", "application/json")
+	response.WriteHeader(http.StatusCreated)
+	json.NewEncoder(response).Encode(event)
+}
+
 func main() {
 	_ = dotenv.SetenvFile(*envfile)
 
 	router := mux.NewRouter()
 
 	router.Use(AuthMiddleware)
+
+	router.HandleFunc("/check", checkHandler).Methods("GET")
 
 	router.HandleFunc("/release", release.Handler).Methods("POST")
 
